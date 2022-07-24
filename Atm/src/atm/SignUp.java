@@ -657,25 +657,54 @@ public class SignUp extends javax.swing.JFrame {
     Connection conn = null;
     String url = "jdbc:mysql://localhost:3306/";
     String user = "root";
-    String password = "";
+    String password = "$sql_passwd";
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     String databaseName = "SignUp";
     String checkIfDatabaseExixtsSQL = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='" + databaseName + "'";
     String createNewDatabaseSQL = "CREATE DATABASE IF NOT EXISTS " + databaseName;
-    String createNewTableSQL = "CREATE TABLE IF NOT EXISTS `newuserdata` (\n"
-            + "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n"
-            + "  `ImageName` varchar(200) NOT NULL,\n"
-            + "  `ImagePath` varchar(200) NOT NULL,\n"
-            + "  `ImageFile` longblob NOT NULL,\n"
-            + "  PRIMARY KEY (`Id`)\n"
-            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    String InsertImageintoDatabaseSQL = "INSERT INTO `newuserdata`(`Account Number`,`First Name`,`Last Name`, `Father's Name`, `Aadhar Card Number`, `PAN CARD Number`,`Mobile Number`, `Gender`, `City`, `Day`, `Month`, `Year`,`Residential Address`,`ImageName`,`ImagePath`,`ImageFile`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    String createNewTableSQL = "create table if not exists newuserdata("
+            + "Account_Number bigint(16) not null primary key,"
+            + "First_Name varchar(20) not null,"
+            + "Last_Name varchar(20) not null,"
+            + "Fathers_Name varchar(40) not null,"
+            + "Aadhar_Card_Number bigint(12) not null,"
+            + "PAN_CARD_Number varchar(10) not null,"
+            + "Mobile_Number bigint(10) not null,"
+            + "Gender varchar(20) not null,"
+            + "City varchar(50) not null,"
+            + "Day bigint not null,"
+            + "Month varchar(20) not null,"
+            + "Year bigint not null,"
+            + "Residential_Address varchar(200) not null,"
+            + "ImageName varchar(200) not null,"
+            + "ImagePath varchar(200) not null,"
+            + "ImageFile longblob not null)";
+//            + "  `Account Number` bigint NOT NULL,\n"
+//            + "  `First Name` varchar(20) NOT NULL,\n" // ADD all column
+//            + "  `Last Name` varchar(20) NOT NULL,\n"
+//            + "  `Father's Name` varchar(40) NOT NULL,\n"
+//            + "  `Aadhar Card Number` bigint NOT NULL,\n"
+//            + "  `PAN CARD Number` bigint NOT NULL,\n" // ADD all column
+//            + "  `Mobile Number` bigint NOT NULL,\n"
+//            + "  `Gender` varchar(20) NOT NULL,\n"
+//            + "  `City` varchar(50) NOT NULL,\n"
+//            + "  `Day` varchar(10) NOT NULL,\n" // ADD all columnot
+//            + "  `Month`varchar(20) NOT NULL,\n"
+//            + "  `Year` bigint NOT NULL,\n"
+//            + "  `Residential Address` varchar(200) NOT NULL,\n"
+//            + "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n"
+//            + "  `ImageName` varchar(200) NOT NULL,\n"
+//            + "  `ImagePath` varchar(200) NOT NULL,\n"
+//            + "  `ImageFile` longblob NOT NULL,\n"
+//            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    String InsertImageintoDatabaseSQL = "insert into newuserdata(Account_Number,First_Name,Last_Name, Fathers_Name,Aadhar_Card_Number,PAN_CARD_Number,Mobile_Number,Gender,City,Day,Month,Year,Residential_Address,ImageName,ImagePath,ImageFile) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     Statement stmt = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
     boolean databaseExists = false;
     String selectedImagePath = null;
     String filename = null;
+    
     InputStream inputstream = null;
 
     private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
@@ -954,8 +983,6 @@ public class SignUp extends javax.swing.JFrame {
                     //Connected to Existing Data
                     JOptionPane.showMessageDialog(null, "Connected to Existing Data = " + databaseName);
                     InsertDataIntoMySQL();
-                    CustomerDetails cd = new CustomerDetails();
-                    cd.setVisible(true);
                 }
                 if (!databaseExists) {
                     JOptionPane.showMessageDialog(null, "Database Not Found");
@@ -968,8 +995,6 @@ public class SignUp extends javax.swing.JFrame {
                         stmt = conn.createStatement();
                         stmt.executeUpdate(createNewTableSQL);
                         InsertDataIntoMySQL();
-                        CustomerDetails cd = new CustomerDetails();
-                        cd.setVisible(true);
                     }
                 }
             } else {
