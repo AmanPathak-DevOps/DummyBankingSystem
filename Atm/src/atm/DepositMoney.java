@@ -26,7 +26,6 @@ public final class DepositMoney extends javax.swing.JFrame {
         showDate();
         showTime();
     }
-
     public DepositMoney(String msg, String first, String last) {
         initComponents();
         acno.setText(msg);
@@ -241,18 +240,19 @@ public final class DepositMoney extends javax.swing.JFrame {
         lp.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void depositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositActionPerformed
         int deposit;
-        deposit = Integer.parseInt(depmoney.getText());
-        if (deposit < 3000 && deposit > 50000) {
-            JOptionPane.showMessageDialog(null, "Please Enter Deposit Amount Must be 3000(Three Thousands To 50,000(Fifty Thousands");
+        deposit = Integer.valueOf(depmoney.getText());
+        if (deposit < 3000 || deposit > 50000) {
+            JOptionPane.showMessageDialog(null, "Please Enter  Deposit Amount Must be 3000(Three Thousands To 50,000(Fifty Thousands", "Alert", JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Your " + deposit + " Rupees Deposited Successfully In Our Bank");
             JOptionPane.showMessageDialog(null, "Confirmation Message Will be sent on Your Phone Soon !");
             JOptionPane.showMessageDialog(null, "Thank You For Using Our Banking System. Have A Nice Day!");
             String de = depmoney.getText();
-            new CustomerDetails(de).setVisible(true);
+            String ac2 = acno.getText();
+            new CustomerDetails(de,ac2).setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_depositActionPerformed

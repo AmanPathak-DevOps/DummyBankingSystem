@@ -657,7 +657,7 @@ public class SignUp extends javax.swing.JFrame {
     Connection conn = null;
     String url = "jdbc:mysql://localhost:3306/";
     String user = "root";
-    String password = "$sql_passwd";
+    String password = "Mynewpassword@123";
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     String databaseName = "SignUp";
     String checkIfDatabaseExixtsSQL = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='" + databaseName + "'";
@@ -898,7 +898,7 @@ public class SignUp extends javax.swing.JFrame {
             Long end = 1999999999999999L;
             long result = ThreadLocalRandom.current().nextLong(start, end + 1);
             AccountNumber.setText(String.valueOf(result));
-            JOptionPane.showMessageDialog(null, "Your Accounet Number has been Generated " + result);
+            JOptionPane.showMessageDialog(null, "Your Account Number has been Generated " + result);
             JOptionPane.showMessageDialog(null, "Now, You Can Proceed For Other Services Or Mode");
             vd = 1;
         }
